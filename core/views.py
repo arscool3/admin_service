@@ -10,15 +10,7 @@ class GetClientView(generics.ListAPIView):
 
 
 class GetLegalPersonView(generics.ListAPIView):
-    queryset = LegalPerson.objects.all()
-    # def get_queryset(self):
-    #     departaments = Department.objects.all()
-    #     legal_persons = LegalPerson.objects.all()
-    #     for legal_person in legal_persons:
-    #         for departament in departaments:
-    #             cur_legal_persons = LegalPerson.objects.filter(departament__in=[departament.id])
-    #             if legal_person in cur_legal_persons:
-    #
+    queryset = LegalPerson.objects.prefetch_related('departments__client')
     serializer_class = LegalPersonSerializer
 
 

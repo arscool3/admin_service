@@ -9,13 +9,17 @@ class ClientSerializer(serializers.ModelSerializer):
         exclude = ['timezone']
 
 
-class LegalPersonSerializer(serializers.ModelSerializer):
+class DepartmentSerializer(serializers.ModelSerializer):
+    client = ClientSerializer(many=True)
+
     class Meta:
-        model = LegalPerson
+        model = Department
         fields = '__all__'
 
 
-class DepartmentSerializer(serializers.ModelSerializer):
+class LegalPersonSerializer(serializers.ModelSerializer):
+    departments = DepartmentSerializer(many=True)
+
     class Meta:
-        model = Department
+        model = LegalPerson
         fields = '__all__'

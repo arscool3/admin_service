@@ -5,6 +5,5 @@ from core.views import GetClientView, GetDepartmentView, GetLegalPersonView, Get
 urlpatterns = [
     path('clients/', GetClientView.as_view()),
     path('legal_persons/', GetLegalPersonView.as_view()),
-    path('legal_persons/<int:pk>', GetLegalPersonDetailView.as_view()),
     path('departments/', GetDepartmentView.as_view()),
 ]

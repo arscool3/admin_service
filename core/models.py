@@ -3,8 +3,14 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from timezone_field import TimeZoneField
 
-from .validators import validate_client_id, validate_legal_person_id,\
-    validate_inn, validate_kpp, validate_department_id, validate_level
+from .validators import (
+    validate_client_id,
+    validate_legal_person_id,
+    validate_inn,
+    validate_kpp,
+    validate_department_id,
+    validate_level
+)
 
 
 class SocialNetworkMixin(models.Model):
@@ -58,7 +64,7 @@ class Client(models.Model):
 
 class LegalPerson(models.Model):
     id = models.IntegerField(primary_key=True, validators=[validate_legal_person_id], verbose_name='Идентификатор')
-    create_date = models.DateField(verbose_name='Дата создания')
+    created_date = models.DateField(verbose_name='Дата создания')
     modified_date = models.DateField(verbose_name='Дата изменения', blank=True, null=True)
     full_title = models.CharField(max_length=50, verbose_name='Полное название')
     short_title = models.CharField(max_length=10, verbose_name='Сокращенное название')
@@ -79,7 +85,7 @@ class Department(models.Model):
     level = models.IntegerField(validators=[validate_level], default=1)
     title = models.CharField(max_length=50, verbose_name='Название')
     client = models.ManyToManyField(Client, related_name='departments', verbose_name='Клиент')
-    legal_person = models.ManyToManyField(LegalPerson, verbose_name='Юридическое лицо')
+    legal_person = models.ManyToManyField(LegalPerson, verbose_name='Юридическое лицо', related_name='departments')
 
     def __str__(self):
         return f'{self.title}'
