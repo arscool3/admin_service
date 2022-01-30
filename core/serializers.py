@@ -1,6 +1,18 @@
 from rest_framework import serializers
 
-from core.models import Client, LegalPerson, Department
+from core.models import Client, LegalPerson, Department, VkSocialNetwork, FbSocialNetwork
+
+
+class VkSocialNetworkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VkSocialNetwork
+        fields = '__all__'
+
+
+class FbSocialNetworkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FbSocialNetwork
+        fields = '__all__'
 
 
 class ClientSerializer(serializers.ModelSerializer):

@@ -81,11 +81,20 @@ class LegalPerson(models.Model):
 
 class Department(models.Model):
     id = models.IntegerField(primary_key=True, validators=[validate_department_id], verbose_name='Идентификатор')
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
-    level = models.IntegerField(validators=[validate_level], default=1)
+    parent = models.ForeignKey('self',
+                               null=True,
+                               blank=True,
+                               on_delete=models.CASCADE,
+                               verbose_name='Высший департамент')
+
+    level = models.IntegerField(validators=[validate_level], default=1, verbose_name='Уровень департамента')
     title = models.CharField(max_length=50, verbose_name='Название')
-    client = models.ManyToManyField(Client, related_name='departments', verbose_name='Клиент')
-    legal_person = models.ManyToManyField(LegalPerson, verbose_name='Юридическое лицо', related_name='departments')
+    client = models.ManyToManyField(Client, related_name='departments', verbose_name='Клиент', blank=True)
+
+    legal_person = models.ManyToManyField(LegalPerson,
+                                          verbose_name='Юридическое лицо',
+                                          related_name='departments',
+                                          blank=True)
 
     def __str__(self):
         return f'{self.title}'
